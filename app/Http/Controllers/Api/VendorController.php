@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vendor;
+use App\Services\VendorService;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
@@ -10,6 +12,13 @@ class VendorController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private VendorService $vendorService;
+
+    public function __construct(VendorService $vendorService)
+    {
+        $this->vendorService = $vendorService;
+    }
+
     public function index()
     {
         //
@@ -18,9 +27,14 @@ class VendorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function getSummary(int $id)
     {
-        //
+        $vendor = Vendor::findOrFail($id);
+
+        return response()->json([
+            'vendor' => $vendor,
+            'summary' => $this->vendorService->getSummary($vendor->id)
+        ]);
     }
 
     /**

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->timestamps();
+
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
         });
     }
 
