@@ -27,16 +27,12 @@ class VendorController extends Controller
      */
     public function getSummary(int $id): JsonResponse
     {
-        $vendor = Vendor::findOrFail($id);
-        $summary = $this->vendorService->calculateSummary($vendor);
-        return response()->json([
-            'vendor' => [
-                'id' => $vendor->id,
-                'name' => $vendor->name,
-                'vat_number' => $vendor->vat_number,
-                'payment_terms' => $vendor->payment_terms,
-            ],
-            'summary' => $summary
-        ]);
+        $summary = $this->vendorService->getSummary($id);
+        return response()->json($summary);
+    }
+    public function getSummaryPerVendor(): JsonResponse
+    {
+        $summaries = $this->vendorService->getSummaryPerVendor();
+        return response()->json($summaries);
     }
 }

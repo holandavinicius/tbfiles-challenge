@@ -33,18 +33,13 @@ class InvoiceController extends Controller
     public function store(StoreInvoiceRequest $request): Response
     {
         $data = $request->validated();
-        $data = empty($data['due_date']) ? $this->invoiceService->fillDueDates($data) : $data;
-        $invoice = Invoice::create($data);
+        $this->invoiceService->createInvoice($data);
         return response()->noContent(201);
     }
 
     public function getInvoices(Request $request): JsonResponse {
-        // Query builder
-        $query = Invoice::query();
-        if($request->filled('vendor_id')) $query->byVendor($request->vendor_id);
-        if($request->filled('status')) $query->byStatus($request->status);
-
-        $invoices = $query->get();
+        $filters = $request->only(['vendor_id', 'status']);
+        $invoices = $this->invoiceService->getInvoices($filters);
         return response()->json($invoices, 200);
     }
 }
