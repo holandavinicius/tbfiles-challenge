@@ -9,7 +9,6 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Login e gerar token
     public function login(Request $request)
     {
         $request->validate([
@@ -22,8 +21,6 @@ class AuthController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
-        // Cria token de API
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
@@ -32,7 +29,6 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout (apaga todos tokens do usuário)
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

@@ -15,4 +15,9 @@ class Vendor extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'vat_number', 'payment_terms'];
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

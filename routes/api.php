@@ -16,6 +16,5 @@ Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/invoices', [InvoiceController::class, 'store']);
     Route::get('/vendors/{id}/summary', [VendorController::class, 'getSummary']);
-    Route::get('/invoices', [InvoiceController::class, 'getInvoices
-    ']);
+    Route::get('/invoices', [InvoiceController::class, 'getInvoices']);
 });

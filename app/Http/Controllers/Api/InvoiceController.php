@@ -6,6 +6,7 @@ use     App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use function PHPUnit\Framework\isEmpty;
@@ -37,27 +38,13 @@ class InvoiceController extends Controller
         return response()->noContent(201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    public function getInvoices(Request $request): JsonResponse {
+        // Query builder
+        $query = Invoice::query();
+        if($request->filled('vendor_id')) $query->byVendor($request->vendor_id);
+        if($request->filled('status')) $query->byStatus($request->status);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $invoices = $query->get();
+        return response()->json($invoices, 200);
     }
 }

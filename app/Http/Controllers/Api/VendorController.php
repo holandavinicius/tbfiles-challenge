@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\GetVendorSummaryResource;
 use App\Models\Vendor;
 use App\Services\VendorService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class VendorController extends Controller
 {
@@ -19,45 +22,21 @@ class VendorController extends Controller
         $this->vendorService = $vendorService;
     }
 
-    public function index()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
-    public function getSummary(int $id)
+    public function getSummary(int $id): JsonResponse
     {
         $vendor = Vendor::findOrFail($id);
-
+        $summary = $this->vendorService->calculateSummary($vendor);
         return response()->json([
-            'vendor' => $vendor,
-            'summary' => $this->vendorService->getSummary($vendor->id)
+            'vendor' => [
+                'id' => $vendor->id,
+                'name' => $vendor->name,
+                'vat_number' => $vendor->vat_number,
+                'payment_terms' => $vendor->payment_terms,
+            ],
+            'summary' => $summary
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
