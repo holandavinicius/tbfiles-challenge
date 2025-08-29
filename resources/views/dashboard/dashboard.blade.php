@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <p>Seu token: {{ $token }}</p>
+        <p>Your API TOKEN</p>: {{ $token }}</p>
     </div>
     <x-vendors-table :token="$token" />
 @endsection
