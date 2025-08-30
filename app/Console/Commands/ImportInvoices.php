@@ -25,7 +25,7 @@ class ImportInvoices extends Command
      */
     public function handle()
     {
-        $path = storage_path('app/feeds/invoices.json');
+        $path = base_path('database/seeders/data/invoices.json');
 
         if (!file_exists($path)) {
             $this->error("Arquivo de feed não encontrado: {$path}");
