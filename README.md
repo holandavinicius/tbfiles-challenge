@@ -14,14 +14,16 @@ This project is a Laravel 12 application with a web dashboard and API endpoints 
 
 ## System Architecture Overview and Design Decisions
 
-The project is built using Laravel 12 for the backend and Blade templates for the frontend. The API is secured with Laravel Sanctum for token-based authentication. 
+The project is built using Laravel 12 for the backend and Blade templates for the frontend. The API is secured with Laravel Sanctum for token-based authentication.
 
-Key design decisions:
+ - **Controllers**: Handle HTTP requests.
+- **Service layer** contains business logic.  
+- **Eloquent ORM** manages database interactions (SQLite).
+
+Design decisions:
 - **Web & API separation**: Routes in `web.php` handle the dashboard, while `api.php` handles API requests.
 - **Session + Sanctum token**: Users authenticate via the web, generating an API token stored in session for dashboard API calls.
-- **SQLite / MySQL support**: Migrations allow easy setup for local development.
-
-
+- **SQLite support**: Migrations allow easy setup for local development.
 
 
 ---
@@ -106,11 +108,17 @@ php artisan serve
 Send a POST request to /api/login with your credentials:
 
 
-<pre> ```json { "email": "admin@example.com", "password": "123456" } ``` </pre>
+ ```json 
+ { 
+   "email": "admin@example.com", 
+   "password": "123456" 
+ } 
+ ```
 
+* You must use this **API TOKEN** in every request to the API, by including it in the request header as a Bearer token: Authorization: Bearer {your_api_token}
 * The dashboard automatically fetches vendor summaries using the API token.
 * API routes are secured with Sanctum; you can use the token to make authenticated requests.
-* Example API endpoint: `/api/vendors/summaries`
+* Example API endpoint: `/api/invoices`
 
 ---
 

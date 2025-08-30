@@ -29,10 +29,10 @@ class VendorService
             ],
             'summary' => [
                 'total_invoices' => $invoices->count(),
-                'total_amount' => $invoices->sum('amount'),
+                'total_amount' => round($invoices->sum('amount'),2),
                 'pending_invoices' => $invoices->where('status', 'pending')->count(),
-                'pending_amount' => $invoices->where('status', 'pending')->sum('amount'),
-                'paid_amount' => $invoices->where('status', 'paid')->sum('amount')
+                'pending_amount' => round($invoices->where('status', 'pending')->sum('amount'),2),
+                'paid_amount' => round($invoices->where('status', 'paid')->sum('amount'),2)
             ]
         ];
     }
