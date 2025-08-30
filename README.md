@@ -101,6 +101,13 @@ php artisan serve
 
 ## Usage
 
+* To access API endpoints, you first need to generate an API token using the login endpoint.
+
+Send a POST request to /api/login with your credentials:
+
+
+<pre> ```json { "email": "admin@example.com", "password": "123456" } ``` </pre>
+
 * The dashboard automatically fetches vendor summaries using the API token.
 * API routes are secured with Sanctum; you can use the token to make authenticated requests.
 * Example API endpoint: `/api/vendors/summaries`
