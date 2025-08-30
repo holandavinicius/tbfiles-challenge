@@ -24,6 +24,7 @@ Design decisions:
 - **Web & API separation**: Routes in `web.php` handle the dashboard, while `api.php` handles API requests.
 - **Session + Sanctum token**: Users authenticate via the web, generating an API token stored in session for dashboard API calls.
 - **SQLite support**: Migrations allow easy setup for local development.
+- **API Rate Limit**: An API TOKEN only supports 10 requests per minute.
 
 
 ---
